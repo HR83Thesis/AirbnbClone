@@ -13,7 +13,7 @@ describe('GET /listings/search/:city', function () {
     request(app).get('/listings/search/oakland')
       .expect(function (res) {
         if (typeof res.body !== 'object' || Array.isArray(res.body)) {
-          throw new Error ('should respond with an object');
+          throw new Error (`should respond with an object but got: ${typeof res.body}`);
         }
       })
       .end(done);
@@ -175,3 +175,30 @@ describe('POST /listings/add', function () {
       });
   });
 });
+
+describe('Unhandled endpoints will respond with statusCode 404', function () {
+  it('should respond with statusCode 404', function (done) {
+    request(app).get('/')
+      .expect(404, done)
+  });
+  it('should respond with a string', function (done) {
+    request(app).get('/')
+      .expect(function (res) {
+        if (typeof res.text !== 'string') {
+          throw new Error ('should respond with a string');
+        }
+      })
+      .end(done);
+  });
+  it('should respond with a message: "This is not the page you are looking for..."', function (done) {
+    request(app).get('/')
+      .expect(function (res) {
+        const message = 'This is not the page you are looking for...';
+        if (res.text !== message) {
+          throw new Error ('should respond with the correct message');
+        }
+      })
+      .end(done);
+  });
+});
+

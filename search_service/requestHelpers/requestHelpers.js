@@ -8,15 +8,17 @@ const client = new elasticsearch.Client({
 });
 
 function postClickToEvents(listingId) {
-  axios.post(eventsUrl + '/clicks', {id: listingId})
-    .catch((err) => '')
+  // axios.post(eventsUrl + '/clicks', {id: listingId})
+  //   .catch((err) => '')
+  return ''
 
 }
 module.exports.postClickToEvents = postClickToEvents;
 
 function postListingToEvents(listingData) {
-  axios.post(eventsUrl + '/add', listingData)
-    .catch(err => '');
+  // axios.post(eventsUrl + '/add', listingData)
+  //   .catch(err => '');
+  return ''
 }
 module.exports.postListingToEvents = postListingToEvents;
 
