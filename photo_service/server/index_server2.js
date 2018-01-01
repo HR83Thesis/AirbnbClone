@@ -19,12 +19,12 @@ const fs = require('fs');
 //------------------------------------------
 const app = express();
 //------------------------------------------
-app.use(express.static(__dirname + '/../testClient'));
+//app.use(express.static(__dirname + '/../testClient'));
 //------------------------------------------
-// app.get('/', (request, response) => {
-//   console.log('Server1');
-//   response.status(200).send('Hello1');
-// });
+app.get('/', (request, response) => {
+  console.log('Server2');
+  response.status(200).send('Hello2');
+});
 //------------------------------------------
 app.post('/uploadphoto', (request, response) => {
   const photo_id = Date.now();
@@ -60,7 +60,7 @@ app.post('/uploadphoto', (request, response) => {
     const file_loc = `${__dirname}/../photos/${photo_id}.jpg`;
 
     db.create(file_loc, photo_id, photo_type);  //don't wait for this async op
-    cache.create(photo_id, file_loc); //don't wait for this async op
+    //write to the cache as well;
 
     const newPhotoInfo = {
       url: `http://localhost:3000/photo/${photo_id}`,
@@ -104,12 +104,12 @@ app.get('/photo/:id', (request, response) => {
 let counter1 = 0;
 app.get('/test', (request, response) => {
   counter1++;
-  console.log('TEST1 ', counter1);
+  console.log('TEST2 ', counter1);
   response.send('');
 });
 //------------------------------------------
 //SETUP CONNECTION TO SERVER:
-const port = 3000;
+const port = 4000;
 const ip = '127.0.0.1';
 
 app.listen(port, () => {
